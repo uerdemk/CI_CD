@@ -1,0 +1,31 @@
+{
+	"device_to_config":
+		[
+            {
+				"device": "ISTEMCI_1",
+				"ip": "10.42.100.52",
+                "port": 22,
+                "sw":
+                        [
+                          {
+                              "sw_name": "SW-1",
+                              "sw_detail":
+                                      [
+                                          {
+                                            "sw_group": "Prj_1",
+                                            "sw_remote_path": "C:/Program Files (x86)/Prj_1/config/"
+                                          },
+                                          {
+                                            "sw_group": "Prj_2",
+                                            "sw_remote_path": "C:/Program Files (x86)/Prj_2/config/"
+                                          },
+                                          {
+                                            "sw_group": "Prj_3",
+                                            "sw_remote_path": "C:/Program Files (x86)/Prj_1/config/"
+                                          }
+                                      ]
+                          }                          
+                        ]
+            }
+        ]
+}
