@@ -1,0 +1,24 @@
+{
+	"device_to_config":
+		[
+			{
+				"device": "R1",
+				"ip": "10.10.10.10",
+				"os": "cisco_ios",
+				"command":
+					[
+						"show running-config",
+						"show ip int brief",
+						"sh standby brief",
+						"sh etherchannel summary",
+						"sh ip ospf neighbor",
+						"sh ip route",
+						"sh ip mroute"
+					],
+				"save": "",
+				"result":
+					[
+					]
+			}
+		]
+}
