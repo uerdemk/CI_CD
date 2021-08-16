@@ -3,29 +3,34 @@ import os
 import sys
 import json
 import shutil
-import re
+import pysftp
 import stdiomask
-from scp import SCPClient
+from stat import S_ISDIR, S_ISREG
 
-user_name = "deneme"
-password = "deneme"
-
-#user_name = input("KULLANICI ADI = ")
-#password = stdiomask.getpass(prompt='SIFRE = ')
+myUsername = input("KULLANICI ADI = ")
+myPassword = stdiomask.getpass(prompt='SIFRE = ')
 
 path_original = os.getcwd()
 
-def createSSHClient(server, port, user, password):
-    client = paramiko.SSHClient()
-    client.load_system_host_keys()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(server, port, user, password)
-    return client
+cnopts = pysftp.CnOpts()
+cnopts.hostkeys = None
+
+def get_r_portable(sftp, remotedir, localdir, preserve_mtime=False):
+    for entry in sftp.listdir_attr(remotedir):
+        remotepath = remotedir + "/" + entry.filename
+        localpath = os.path.join(localdir, entry.filename)
+        mode = entry.st_mode
+        if S_ISDIR(mode):
+            try:
+                os.mkdir(localpath)
+            except OSError:
+                pass
+            get_r_portable(sftp, remotepath, localpath, preserve_mtime)
+        elif S_ISREG(mode):
+            sftp.get(remotepath, localpath, preserve_mtime=preserve_mtime)
 
 while(1):
     os.chdir(path_original)
-    ssh = createSSHClient("10.42.100.52", "22", user_name, password)
-
     try:
         with open('AKINCI_win_cihazlari.json') as Konfig:
             Konfig_json = json.load(Konfig)
@@ -67,21 +72,20 @@ while(1):
                     print(path_original_yazilim_alt2 + " isimli klasor yaratıldı...")
                 os.chdir(path_original_yazilim_alt2)
 
-                with SCPClient(ssh.get_transport()) as scp:
-                    for k in range(len(Konfig_json["device_to_config"][t]["sw"][l]["sw_detail"])):
-                        path_original_yazilim_alt3 = os.getcwd() + "\\" + Konfig_json["device_to_config"][t]["sw"][l]["sw_detail"][k]["sw_group"]
-                        if not os.path.exists(path_original_yazilim_alt3):
-                            os.makedirs(path_original_yazilim_alt3)
-                            print(path_original_yazilim_alt3 + " isimli klasor yaratıldı...")
-                        os.chdir(path_original_yazilim_alt3)
-                        print(path_original_yazilim_alt3 + " klasorune konfig dosyaları oluturuluyor")
-                        #path = "C:/TAITAI/TAI/SYY/SYY_AnkaS/config/"
-                        path = "C:/TAI TAI/TAI/SYY/SYY_AnkaS/config/"
-                        print(path)
-                        scp.get(path, recursive=True)
-                        #scp.get(Konfig_json["device_to_config"][t]["sw"][l]["sw_detail"][k]["sw_remote_path"], recursive=True)
-                        os.chdir(path_original_yazilim_alt2)
-    except Exception(e):
+
+                for k in range(len(Konfig_json["device_to_config"][t]["sw"][l]["sw_detail"])):
+                    path_original_yazilim_alt3 = os.getcwd() + "\\" + Konfig_json["device_to_config"][t]["sw"][l]["sw_detail"][k]["sw_group"]
+                    if not os.path.exists(path_original_yazilim_alt3):
+                        os.makedirs(path_original_yazilim_alt3)
+                        print(path_original_yazilim_alt3 + " isimli klasor yaratıldı...")
+                    os.chdir(path_original_yazilim_alt3)
+                    print(path_original_yazilim_alt3 + " klasorune konfig dosyaları oluturuluyor")
+                    with pysftp.Connection(host=Konfig_json["device_to_config"][t]["ip"], username=myUsername, password=myPassword,
+                                           cnopts=cnopts) as sftp:
+                        remoteFilePath = Konfig_json["device_to_config"][t]["sw"][l]["sw_detail"][k]["sw_remote_path"]
+                        get_r_portable(sftp, remoteFilePath, os.getcwd(), preserve_mtime=False)
+                    os.chdir(path_original_yazilim_alt2)
+    except Exception as e:
         print(e)
 
     a = 1
@@ -92,6 +96,3 @@ while(1):
             if fake == "1":
                 sys.exit()
             a = 0
-
-
-
