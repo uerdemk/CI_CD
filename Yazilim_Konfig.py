@@ -7,6 +7,12 @@ import pysftp
 import stdiomask
 from stat import S_ISDIR, S_ISREG
 
+########################################################################################################################################
+# Bu program...
+#
+#
+#######################################################################################################################################
+
 myUsername = input("KULLANICI ADI = ") #kullanici adi girisi
 myPassword = stdiomask.getpass(prompt='SIFRE = ') #sifre girisi
 
