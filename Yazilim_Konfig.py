@@ -7,9 +7,9 @@ import stdiomask
 from stat import S_ISDIR, S_ISREG
 
 ########################################################################################################################################
-# Bu program...
-#
-#
+# Bu program Uzak cihaza bağlanıp, konfig(.json) dosyasındaki yazılım ve bilgileri kullanarak, ilgili yazılımlara ait konfigürasyon 
+# dosyalarını, komutun çalıştırıldığı dizine çekmektedir.
+# desing by UEKI
 #######################################################################################################################################
 
 myUsername = input("KULLANICI ADI = ") #kullanici adi girisi
@@ -101,6 +101,5 @@ while(1):
             print("   ")
             fake = input("Programi kapatmak icin '1'e, yeni islem icin herhangi bir tusa basiniz...")#kullanicidan aldigi degeri fake degiskenine atadi.
             print(fake)
-            if fake == "1": #fake=1 ise cikis komutu verdi. burasi calismiyor olabilir. break kullanilmasi gerekebilir.
-                sys.exit()
+            if fake == "1": #fake=1 ise cikis komutu verdi. 
             a = 0
