@@ -159,7 +159,7 @@ if secim == 6:
         if a == 1:
             print("#########################################")
             print("Ayar Dosyalari yukleniyor..")
-            with open('TUNUS_cihazlar.json') as Konfig:
+            with open('T_cihazlar.json') as Konfig:
                 Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
         else:
             print("#########################################")
