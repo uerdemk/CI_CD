@@ -3,6 +3,7 @@ import sys
 import json
 import shutil
 import pysftp
+import socket
 import stdiomask
 from stat import S_ISDIR, S_ISREG
 
@@ -45,127 +46,38 @@ def get_r_portable(sftp, remotedir, localdir, preserve_mtime=False):  #fonksiyon
             print("##########Yukleniyor..#################### "+ remotepath)
     return counter
 
-secim = int(input("1- A\n2- S\n3- I\n4- J\n5- D\n6- T\nSeciminiz = "))
-if secim == 1:
-    try:
-        with open('A_cihazlar.json') as Konfig:
-            Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-    except IOError:
-        print("#########################################")
-        print(
-            "Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
-        print("#########################################")
-        a = int(input("Tekrar denemek icin 1'e, Programi kapatmak icin herhangi bir tusa basip ENTER'a basiniz... : "))
-        if a == 1:
-            print("#########################################")
-            print("Ayar Dosyalari yukleniyor..")
-            with open('A_cihazlar.json') as Konfig:
-                Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-        else:
-            print("#########################################")
-            print("PROGRAM KAPATILIYOR.")
-            input("Devam etmek icin ENTER'a basiniz..")
-            sys.exit()
-if secim == 2:
-    try:
-        with open('S_cihazlar.json') as Konfig:
-            Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-    except IOError:
-        print("#########################################")
-        print(
-            "Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
-        print("#########################################")
-        a = int(input("Tekrar denemek icin 1'e, Programi kapatmak icin herhangi bir tusa basip ENTER'a basiniz... : "))
-        if a == 1:
-            print("#########################################")
-            print("Ayar Dosyalari yukleniyor..")
-            with open('S_cihazlar.json') as Konfig:
-                Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-        else:
-            print("#########################################")
-            print("PROGRAM KAPATILIYOR.")
-            input("Devam etmek icin ENTER'a basiniz..")
-            sys.exit()
-if secim == 3:
-    try:
-        with open('I_cihazlar.json') as Konfig:
-            Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-    except IOError:
-        print("#########################################")
-        print(
-            "Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
-        print("#########################################")
-        a = int(input("Tekrar denemek icin 1'e, Programi kapatmak icin herhangi bir tusa basip ENTER'a basiniz... : "))
-        if a == 1:
-            print("#########################################")
-            print("Ayar Dosyalari yukleniyor..")
-            with open('I_cihazlar.json') as Konfig:
-                Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-        else:
-            print("#########################################")
-            print("PROGRAM KAPATILIYOR.")
-            input("Devam etmek icin ENTER'a basiniz..")
-            sys.exit()
-if secim == 4:
-    try:
-        with open('J_cihazlar.json') as Konfig:
-            Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-    except IOError:
-        print("#########################################")
-        print(
-            "Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
-        print("#########################################")
-        a = int(input("Tekrar denemek icin 1'e, Programi kapatmak icin herhangi bir tusa basip ENTER'a basiniz... : "))
-        if a == 1:
-            print("#########################################")
-            print("Ayar Dosyalari yukleniyor..")
-            with open('J_cihazlar.json') as Konfig:
-                Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-        else:
-            print("#########################################")
-            print("PROGRAM KAPATILIYOR.")
-            input("Devam etmek icin ENTER'a basiniz..")
-            sys.exit()
-if secim == 5:
-    try:
-        with open('D_cihazlar.json') as Konfig:
-            Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-    except IOError:
-        print("#########################################")
-        print(
-            "Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
-        print("#########################################")
-        a = int(input("Tekrar denemek icin 1'e, Programi kapatmak icin herhangi bir tusa basip ENTER'a basiniz... : "))
-        if a == 1:
-            print("#########################################")
-            print("Ayar Dosyalari yukleniyor..")
-            with open('D_cihazlar.json') as Konfig:
-                Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-        else:
-            print("#########################################")
-            print("PROGRAM KAPATILIYOR.")
-            input("Devam etmek icin ENTER'a basiniz..")
-            sys.exit()
-if secim == 6:
-    try:
-        with open('T_cihazlar.json') as Konfig:
-            Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-    except IOError:
-        print("#########################################")
-        print(
-            "Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
-        print("#########################################")
-        a = int(input("Tekrar denemek icin 1'e, Programi kapatmak icin herhangi bir tusa basip ENTER'a basiniz... : "))
-        if a == 1:
-            print("#########################################")
-            print("Ayar Dosyalari yukleniyor..")
-            with open('T_cihazlar.json') as Konfig:
-                Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
-        else:
-            print("#########################################")
-            print("PROGRAM KAPATILIYOR.")
-            input("Devam etmek icin ENTER'a basiniz..")
-            sys.exit()
+def dosya_sec():
+    def get_IP():
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("10.255.255.255", 80))
+        ipaddr = s.getsockname()[0]
+        s.close()
+        return ipaddr
+    IP = get_IP()
+    for entry in os.listdir(os.getcwd()) :
+
+        if entry[-5:] == ".json":
+            with open(entry) as Konfig:
+                loadconf = json.load(Konfig)
+                IPCONF = loadconf["device_to_config"][0]["ip"]
+                octets1 = IPCONF.split('.')
+                octets2 = IP.split('.')
+                if octets1[0] == octets2[0] and octets1[1] == octets2[1]:
+                    secim = entry
+            Konfig.close()
+    return secim
+
+konfig = dosya_sec()
+print(konfig)
+
+try:
+    with open(konfig) as Konfig:
+        Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
+except IOError:
+    print("#########################################")
+    print(
+        "Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
+    input("#")
 a = 1
 while (a):
     os.chdir(path_original) # ilk komutun gerceklestigi path_original pathine gidiyor.
