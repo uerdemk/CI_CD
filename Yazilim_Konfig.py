@@ -75,9 +75,8 @@ try:
         Konfig_json = json.load(Konfig)  # Konfig bilgileri yukleniyor.
 except IOError:
     print("#########################################")
-    print(
-        "Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
-    input("#")
+    input("Cihaz ayarlarının oldugu dosyayi program ile ayni klasore koyunuz!!!")  # try-except yapisina kullanilmis, sorun olursa uyari vermesi icin.
+    sys.exit()
 a = 1
 while (a):
     os.chdir(path_original) # ilk komutun gerceklestigi path_original pathine gidiyor.
