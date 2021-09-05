@@ -49,7 +49,7 @@ def get_r_portable(sftp, remotedir, localdir, preserve_mtime=False):  #fonksiyon
 def dosya_sec():
     def get_IP():
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("10.255.255.255", 80))
+        s.connect(("10.255.255.255", 1))
         ipaddr = s.getsockname()[0]
         s.close()
         return ipaddr
