@@ -58,3 +58,13 @@ networks:
       config:
         - subnet: 10.5.0.0/24
           gateway: 10.5.0.1
+
+
+
+https://dbt3ch.com/books/prometheus-grafana-dashboard/page/docker-compose
+https://jhooq.com/prometheous-grafan-setup/
+https://linuxhint.com/install-monitor-windows-os-prometheus/
+https://grafana.com/grafana/dashboards/14510-windows-exporter-node/
+https://nklya.medium.com/promql-how-to-return-0-instead-of-no-data-9e49f7ccb80d
+https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid-Integrated-Edition/1.16/tkgi/GUID-windows-monitoring.html
+
