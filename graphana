@@ -1,0 +1,60 @@
+prometheus.yml
+
+global:
+  scrape_interval: 5s
+  external_labels:
+    monitor: 'node'
+scrape_configs:
+  - job_name: 'windows'
+    static_configs:
+      - targets: ['192.168.43.5:9182'] ## IP Address of the localhost
+      
+      
+      
+      
+      
+docker-compose.yml
+
+version: '3.3'
+services:
+    node-exporter:
+        network_mode: host
+        pid: host
+        volumes:
+            - './:/host:ro,rslave'
+        image: 'quay.io/prometheus/node-exporter:latest'
+        ports:
+            - '9100:9100' #modify 9091 to your setup needs       
+    prometheus:
+        container_name: prometheus
+        ports:
+            - '9090:9090' #modify 9091 to your setup needs
+        volumes:
+            - ./:/etc/prometheus/ #modify the path for your install location
+            - prometheus_data:/prometheus
+        command:
+          - '--config.file=/etc/prometheus/prometheus.yml'
+          - '--storage.tsdb.path=/prometheus'
+          - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+          - '--web.console.templates=/usr/share/prometheus/consoles'
+        image: prom/prometheus
+        networks:
+            prometheus:
+              ipv4_address: 10.5.0.90      
+    grafana:
+        container_name: grafana
+        ports:
+            - '13457:3000' #modify 13457 to your setup needs
+        image: grafana/grafana
+        networks:
+            prometheus:
+              ipv4_address: 10.5.0.110 
+volumes:
+    prometheus_data:
+networks:
+  prometheus:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/24
+          gateway: 10.5.0.1
